@@ -159,4 +159,300 @@
             border-radius: 16px;
             color: #155724;
         }
-        .success.show { display
+        .success.show { display: block; }
+        .success h3 { font-size: 1.6rem; margin-bottom: 10px; }
+        .success p { margin-bottom: 20px; }
+        .success .btn {
+            display: inline-block;
+            background: #155724;
+            color: #fff;
+            padding: 12px 35px;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .success .btn:hover { transform: scale(1.03); }
+        
+        /* ========== КНОПКА НАЗАД ========== */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+            border: none;
+            background: none;
+            font-size: 1rem;
+        }
+        .back-btn:hover { color: #764ba2; transform: translateX(-3px); }
+        
+        /* ========== ПОДВАЛ ========== */
+        footer {
+            background: linear-gradient(135deg, #0c0c1d, #1a1a3e);
+            color: #b8b8d4;
+            padding: 40px 20px 0;
+            margin-top: 60px;
+        }
+        .footer-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            padding-bottom: 30px;
+        }
+        footer h3 {
+            color: #f0c27f;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        footer p { margin: 8px 0; font-size: 0.95rem; }
+        footer a { color: #b8b8d4; transition: color 0.3s; }
+        footer a:hover { color: #f0c27f; }
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        /* ========== АДАПТИВНОСТЬ ========== */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; flex-direction: column; text-align: center; }
+            nav { margin-top: 12px; justify-content: center; }
+            .form-box { padding: 25px; margin: 0 10px; }
+            .form-actions { flex-direction: column; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .form-box h2 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ======================== ШАПКА ======================== -->
+<header>
+    <div class="logo">
+        <h1>🏨 <span>Золотая</span> осень</h1>
+        <div class="slogan">✦ Ваш идеальный отдых в центре города</div>
+    </div>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="index.html#catalog">Каталог</a>
+        <a href="booking.html" class="active">Бронирование</a>
+    </nav>
+</header>
+
+<!-- ======================== СТРАНИЦА БРОНИРОВАНИЯ ======================== -->
+<div class="container">
+    <a href="index.html#catalog" class="back-btn">← Вернуться к каталогу</a>
+    
+    <div class="form-box">
+        <h2>📋 Бронирование номера</h2>
+        
+        <div id="room-info" class="room-info">
+            <p class="empty">Выберите номер в каталоге</p>
+        </div>
+        
+        <form id="booking-form" onsubmit="submitBooking(event)">
+            <div class="form-group">
+                <label>Имя *</label>
+                <input type="text" id="b-name" placeholder="Иван" pattern="[А-Яа-яЁё\s\.\-]+" required>
+                <div class="error" id="err-name">Только кириллица, пробелы, точки, тире</div>
+            </div>
+            
+            <div class="form-group">
+                <label>Фамилия *</label>
+                <input type="text" id="b-surname" placeholder="Петров" pattern="[А-Яа-яЁё\s\.\-]+" required>
+                <div class="error" id="err-surname">Только кириллица, пробелы, точки, тире</div>
+            </div>
+            
+            <div class="form-group">
+                <label>Телефон *</label>
+                <input type="text" id="b-phone" placeholder="+7(XXX)XXX-XX-XX" pattern="\+7\(\d{3}\)\d{3}-\d{2}-\d{2}" required>
+                <div class="error" id="err-phone">Формат: +7(XXX)XXX-XX-XX</div>
+            </div>
+            
+            <div class="form-group">
+                <label>E-mail *</label>
+                <input type="email" id="b-email" placeholder="mail@example.com" required>
+                <div class="error" id="err-email">Введите корректный email</div>
+            </div>
+            
+            <div class="form-group">
+                <label>Дата заезда *</label>
+                <input type="date" id="b-checkin" required>
+                <div class="error" id="err-checkin">Выберите дату</div>
+            </div>
+            
+            <div class="form-group">
+                <label>Дата выезда *</label>
+                <input type="date" id="b-checkout" required>
+                <div class="error" id="err-checkout">Должна быть позже заезда</div>
+            </div>
+            
+            <div class="form-group">
+                <label>Комментарий</label>
+                <textarea id="b-comment" rows="2" placeholder="Дополнительные пожелания"></textarea>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">📩 Отправить заявку</button>
+                <button type="reset" class="btn-reset">Очистить</button>
+            </div>
+        </form>
+        
+        <div class="success" id="success-msg">
+            <h3>✅ Заявка успешно отправлена!</h3>
+            <p>Наш менеджер свяжется с вами в ближайшее время</p>
+            <a href="index.html#catalog" class="btn">Вернуться в каталог</a>
+        </div>
+    </div>
+</div>
+
+<!-- ======================== ПОДВАЛ ======================== -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <h3>📌 Контакты</h3>
+            <p>📍 г. Москва, ул. Тверская, 15</p>
+            <p>🕐 Круглосуточно, ежедневно</p>
+            <p>📞 +7(495)123-45-67</p>
+            <p>✉ info@golden-autumn-hotel.ru</p>
+        </div>
+        <div>
+            <h3>🔗 Быстрые ссылки</h3>
+            <p><a href="index.html#catalog">Каталог номеров</a></p>
+            <p><a href="booking.html">Бронирование</a></p>
+            <p><a href="#">О нас</a></p>
+        </div>
+        <div>
+            <h3>🌐 Мы в соцсетях</h3>
+            <p style="font-size: 1.5rem; display: flex; gap: 15px; margin-top: 5px;">
+                <a href="#">📱</a>
+                <a href="#">📷</a>
+                <a href="#">👍</a>
+                <a href="#">🐦</a>
+            </p>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2026 Отель «Золотая осень». Все права защищены.</div>
+</footer>
+
+<!-- ======================== СКРИПТЫ ======================== -->
+<script src="data.js"></script>
+<script>
+// ============ ПОЛУЧЕНИЕ ID ИЗ URL ============
+const urlParams = new URLSearchParams(window.location.search);
+const roomId = parseInt(urlParams.get('id'));
+
+// ============ ОТОБРАЖЕНИЕ ИНФОРМАЦИИ О НОМЕРЕ ============
+if (roomId) {
+    const room = getRoomById(roomId);
+    const el = document.getElementById('room-info');
+    if (room) {
+        el.innerHTML = `
+            <h3>${room.title}</h3>
+            <div class="price">${room.price.toLocaleString()} ₽ / сутки</div>
+            <div class="feat">${room.features.join(' • ')}</div>
+        `;
+    }
+}
+
+// ============ ВАЛИДАЦИЯ ФОРМЫ ============
+function submitBooking(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('b-name');
+    const surname = document.getElementById('b-surname');
+    const phone = document.getElementById('b-phone');
+    const email = document.getElementById('b-email');
+    const checkin = document.getElementById('b-checkin');
+    const checkout = document.getElementById('b-checkout');
+    
+    // Очистка ошибок
+    document.querySelectorAll('.error').forEach(el => el.classList.remove('show'));
+    document.querySelectorAll('.error-input').forEach(el => el.classList.remove('error-input'));
+    
+    let valid = true;
+    
+    // Имя
+    if (!name.value.trim() || !/^[А-Яа-яЁё\s\.\-]+$/.test(name.value)) {
+        document.getElementById('err-name').classList.add('show');
+        name.classList.add('error-input');
+        valid = false;
+    }
+    
+    // Фамилия
+    if (!surname.value.trim() || !/^[А-Яа-яЁё\s\.\-]+$/.test(surname.value)) {
+        document.getElementById('err-surname').classList.add('show');
+        surname.classList.add('error-input');
+        valid = false;
+    }
+    
+    // Телефон
+    if (!phone.value.trim() || !/^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/.test(phone.value)) {
+        document.getElementById('err-phone').classList.add('show');
+        phone.classList.add('error-input');
+        valid = false;
+    }
+    
+    // Email
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        document.getElementById('err-email').classList.add('show');
+        email.classList.add('error-input');
+        valid = false;
+    }
+    
+    // Даты
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    if (!checkin.value) {
+        document.getElementById('err-checkin').classList.add('show');
+        checkin.classList.add('error-input');
+        valid = false;
+    } else if (new Date(checkin.value) < today) {
+        document.getElementById('err-checkin').textContent = 'Дата не может быть в прошлом';
+        document.getElementById('err-checkin').classList.add('show');
+        checkin.classList.add('error-input');
+        valid = false;
+    }
+    
+    if (!checkout.value) {
+        document.getElementById('err-checkout').classList.add('show');
+        checkout.classList.add('error-input');
+        valid = false;
+    } else if (checkin.value && new Date(checkout.value) <= new Date(checkin.value)) {
+        document.getElementById('err-checkout').textContent = 'Должна быть позже заезда';
+        document.getElementById('err-checkout').classList.add('show');
+        checkout.classList.add('error-input');
+        valid = false;
+    }
+    
+    if (valid) {
+        // Успех
+        document.getElementById('booking-form').style.display = 'none';
+        document.getElementById('success-msg').classList.add('show');
+        console.log('✅ Бронирование отправлено:', {
+            name: name.value,
+            surname: surname.value,
+            phone: phone.value,
+            email: email.value,
+            checkin: checkin.value,
+            checkout: checkout.value,
+            comment: document.getElementById('b-comment').value,
+            roomId: roomId
+        });
+    }
+}
+</script>
+
+</body>
+</html>
